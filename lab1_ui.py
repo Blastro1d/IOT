@@ -14,7 +14,7 @@ from PyQt5 import QtCore, QtGui, QtWidgets
 class Ui_Form(object):
     def setupUi(self, Form):
         Form.setObjectName("Form")
-        Form.resize(400, 300)
+        Form.resize(674, 418)
         self.pushButton = QtWidgets.QPushButton(Form)
         self.pushButton.setGeometry(QtCore.QRect(10, 20, 88, 27))
         self.pushButton.setObjectName("pushButton")
@@ -27,6 +27,9 @@ class Ui_Form(object):
         self.spinBox_2 = QtWidgets.QSpinBox(self.groupBox)
         self.spinBox_2.setGeometry(QtCore.QRect(20, 80, 141, 28))
         self.spinBox_2.setObjectName("spinBox_2")
+        self.MplWidget = MplWidget(Form)
+        self.MplWidget.setGeometry(QtCore.QRect(240, 30, 381, 351))
+        self.MplWidget.setObjectName("MplWidget")
 
         self.retranslateUi(Form)
         QtCore.QMetaObject.connectSlotsByName(Form)
@@ -36,3 +39,4 @@ class Ui_Form(object):
         Form.setWindowTitle(_translate("Form", "Form"))
         self.pushButton.setText(_translate("Form", "PushButton"))
         self.groupBox.setTitle(_translate("Form", "GroupBox"))
+from mplwidget import MplWidget
