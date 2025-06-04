@@ -55,22 +55,26 @@ class Lab1(QMainWindow):
     self.counter += 1
 
     data = read()
-    split = data.split(' ')
-    self.x.append(split[0])
-    self.y.append(split[1])
-    self.z.append(split[2])
+    split = data.split('\t')
+    
+    values = [split[0], split[1], split[2][:-2]]
 
-    range = self.ui.spinBox_2.value()
+    print(values)
+    self.x.append(float(values[0]))
+    self.y.append(float(values[1]))
+    self.z.append(float(values[2]))
 
-    while range < len(self.x):
+    max_range = self.ui.spinBox_2.value()
+
+    while max_range < len(self.x):
       self.x.pop(0)
       self.y.pop(0)
       self.z.pop(0)
 
     self.ui.MplWidget.canvas.axes.clear()
-    self.ui.MplWidget.canvas.axes.plot(self.counter, self.x, 'r', linewidth=0.5)
-    self.ui.MplWidget.canvas.axes.plot(self.counter, self.y, 'r', linewidth=0.5)
-    self.ui.MplWidget.canvas.axes.plot(self.counter, self.z, 'r', linewidth=0.5)
+    self.ui.MplWidget.canvas.axes.plot(range(len(self.x)), self.x, 'b', linewidth=0.5)
+    self.ui.MplWidget.canvas.axes.plot(range(len(self.y)), self.y, 'r', linewidth=0.5)
+    self.ui.MplWidget.canvas.axes.plot(range(len(self.z)), self.z, 'g', linewidth=0.5)
     self.ui.MplWidget.canvas.draw()
 
   @property
