@@ -56,13 +56,10 @@ class Lab1(QMainWindow):
 
     data = read()
     split = data.split('\t')
-    
-    values = [split[0], split[1], split[2][:-2]]
 
-    print(values)
-    self.x.append(float(values[0]))
-    self.y.append(float(values[1]))
-    self.z.append(float(values[2]))
+    self.x.append(float(split[0]))
+    self.y.append(float(split[1]))
+    self.z.append(float(split[2]))
 
     max_range = self.ui.spinBox_2.value()
 
