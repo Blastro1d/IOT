@@ -26,6 +26,18 @@ def read():
   return lines[-2].decode('utf-8')
 
 
+def mean(axis):
+  return sum(axis) / len(axis)
+
+
+def std_dev(axis):
+  summation = 0
+  for i in range(len(axis)):
+    summation += pow(axis[i] - mean(axis), 2)
+
+  return summation / len(axis)
+
+
 class Lab1(QMainWindow):
   def __init__(self, *args):
     QMainWindow.__init__(self)
@@ -46,6 +58,7 @@ class Lab1(QMainWindow):
     self.timer.timeout.connect(self.timer_event)
     self.timer_on = False
 
+
   def timer_control(self):
     if self.timer_on:
       self.timer.stop()
@@ -65,7 +78,6 @@ class Lab1(QMainWindow):
 
       self.ui.pushButton.setText("Stop")
       self.ui.pushButton.setStyleSheet("background-color: red")
-
 
 
   def timer_event(self):
@@ -92,6 +104,14 @@ class Lab1(QMainWindow):
     self.ui.MplWidget.canvas.axes.plot(range(len(self.z)), self.z, 'g', linewidth=0.5)
     self.ui.MplWidget.canvas.draw()
 
+    self.ui.mean_X.display(mean(self.x))
+    self.ui.mean_Y.display(mean(self.x))
+    self.ui.mean_Z.display(mean(self.x))
+
+    self.ui.Standard_dev_X.display(std_dev(self.x))
+    self.ui.Standard_dev_Y.display(std_dev(self.x))
+    self.ui.Standard_dev_Z.display(std_dev(self.x))
+
     if (time.time() - self.start_time >= self.time_limit):
       print("Time limit: " + str(self.time_limit) + " exceeded")
       self.timer_control()
@@ -112,7 +132,7 @@ class Lab1(QMainWindow):
     name = self.ui.plainTextEdit.toPlainText()
     with open(name+".csv", 'w', newline='') as csvfile:
       fieldnames = ['x', 'y', 'z']
-      
+
 
       write = csv.writer(csvfile)
       write.writerow(fieldnames)
