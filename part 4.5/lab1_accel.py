@@ -48,15 +48,15 @@ class Lab1(QMainWindow):
     if self.timer_on:
       self.timer.stop()
       self.timer_on = False
-      
+
       self.ui.pushButton.setText("Start")
       self.ui.pushButton.setStyleSheet("background-color: green")
-      
+
     else:
-      interval = self.ui.spinBox.value() * 100
+      interval = self.ui.spinBox.value()
       self.timer.start(interval)
       self.timer_on = True
-      
+
       self.ui.pushButton.setText("Stop")
       self.ui.pushButton.setStyleSheet("background-color: red")
 
@@ -101,7 +101,6 @@ class Lab1(QMainWindow):
     name = self.ui.plainTextEdit.toPlainText()
     with open(name+".csv", 'w', newline='') as csvfile:
       fieldnames = ['x', 'y', 'z']
-      
 
       write = csv.writer(csvfile)
       write.writerow(fieldnames)
