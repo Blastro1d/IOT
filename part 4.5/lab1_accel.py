@@ -52,7 +52,7 @@ class Lab1(QMainWindow):
       self.timer_on = False
 
       self.ui.pushButton.setText("Start")
-      self.ui.pushButton.setStyleSheet("background-color: green")
+      self.ui.pushButton.setStyleSheet("background-color: green; color: white; font-weight: bold;")
 
     else:
       interval = self.ui.spinBox.value()
@@ -64,7 +64,7 @@ class Lab1(QMainWindow):
       self.start_time = time.time()
 
       self.ui.pushButton.setText("Stop")
-      self.ui.pushButton.setStyleSheet("background-color: red")
+      self.ui.pushButton.setStyleSheet("background-color: red; color: white; font-weight: bold;")
 
 
 
