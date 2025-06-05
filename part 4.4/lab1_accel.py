@@ -41,6 +41,7 @@ class Lab1(QMainWindow):
     self.timer = QTimer(self)
     self.timer.timeout.connect(self.timer_event)
     self.timer_on = False
+    self.timer.remainingTime()
 
   def mybuttonfunction(self):
     if self.timer_on:

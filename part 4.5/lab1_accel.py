@@ -16,6 +16,8 @@ import time
 
 arduino = serial.Serial(port='/dev/ttyACM0', baudrate=115200, timeout=0.1)
 
+start_time = 0;
+time_limit = 0;
 
 def read():
   data = arduino.read(arduino.in_waiting)
@@ -48,21 +50,26 @@ class Lab1(QMainWindow):
     if self.timer_on:
       self.timer.stop()
       self.timer_on = False
-      
+
       self.ui.pushButton.setText("Start")
       self.ui.pushButton.setStyleSheet("background-color: green")
-      
+
     else:
       interval = self.ui.spinBox.value() * 100
+      self.time_limit = self.ui.spinBox_3.value()
+
       self.timer.start(interval)
       self.timer_on = True
-      
+
+      self.start_time = time.time()
+
       self.ui.pushButton.setText("Stop")
       self.ui.pushButton.setStyleSheet("background-color: red")
 
 
 
   def timer_event(self):
+
     self.counter += 1
 
     data = read()
@@ -84,6 +91,10 @@ class Lab1(QMainWindow):
     self.ui.MplWidget.canvas.axes.plot(range(len(self.y)), self.y, 'r', linewidth=0.5)
     self.ui.MplWidget.canvas.axes.plot(range(len(self.z)), self.z, 'g', linewidth=0.5)
     self.ui.MplWidget.canvas.draw()
+
+    if (time.time() - self.start_time >= self.time_limit):
+      print("Time limit: " + str(self.time_limit) + " exceeded")
+      self.timer_control()
 
   @property
   def x_value(self):
