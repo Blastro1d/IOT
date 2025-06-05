@@ -22,10 +22,18 @@ void loop() {
   if (IMU.accelerationAvailable()) {
     IMU.readAcceleration(x, y, z);
 
-    Serial.print(x);
+
+    /*
+      According to https://docs.arduino.cc/tutorials/nano-33-iot/imu-gyroscope/
+      the accelerometer has a resolution of 0,122 mg.
+      Following this we decided to report the values with an accuracy of 3 decimals.
+      As using more decimals wouldn't result in more accurate values.
+    */
+
+    Serial.print(x, 3);
     Serial.print('\t');
-    Serial.print(y);
+    Serial.print(y, 3);
     Serial.print('\t');
-    Serial.println(z);
+    Serial.print(z, 3);
   }
 }

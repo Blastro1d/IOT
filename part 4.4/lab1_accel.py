@@ -31,7 +31,7 @@ class Lab1(QMainWindow):
     # window = loadUi("lab1.ui", self)
     self.setWindowTitle("arduino sensors")
 
-    self.ui.pushButton.clicked.connect(self.mybuttonfunction)
+    self.ui.pushButton.clicked.connect(self.timer_control)
 
     self.counter = 0
     self.x = []
@@ -43,7 +43,7 @@ class Lab1(QMainWindow):
     self.timer_on = False
     self.timer.remainingTime()
 
-  def mybuttonfunction(self):
+  def timer_control(self):
     if self.timer_on:
       self.timer.stop()
       self.timer_on = False
