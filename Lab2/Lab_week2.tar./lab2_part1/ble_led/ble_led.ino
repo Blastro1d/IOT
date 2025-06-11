@@ -32,7 +32,7 @@ void setup() {
 
 
 // set advertised local name and service UUID:
-  BLE.setLocalName("BLE-LAB2");
+  BLE.setLocalName("BLE-LAB2-#8");
   BLE.setAdvertisedService(ledService);
 
 // add the characteristic to the service
