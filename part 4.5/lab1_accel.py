@@ -17,8 +17,8 @@ from threading import *
 
 arduino = serial.Serial(port='/dev/ttyACM0', baudrate=115200, timeout=0.1)
 
-start_time = 0;
-time_limit = 0;
+start_time = 0
+time_limit = 0
 
 def read():
   data = arduino.read(arduino.in_waiting)
