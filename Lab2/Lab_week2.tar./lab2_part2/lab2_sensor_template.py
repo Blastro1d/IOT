@@ -18,8 +18,8 @@ logger = logging.getLogger(__name__)
 
 
 def notification_handler(sender,data):
-    #convert the data into 3 floats
-    print("data:",sensorvalues)
+    decoded_values = struct.unpack('fff', bytes(data))
+    print(decoded_values)
 
 async def main(args: argparse.Namespace):
     global exit_flag
@@ -37,10 +37,7 @@ async def main(args: argparse.Namespace):
     print("device addr:", device.address)
     print("services: ", args.services)
 
-    async with BleakClient(
-        device,
-        services=args.services,
-    ) as client:
+    async with BleakClient(device, services=args.services) as client:
         logger.info("connected")
 
 
@@ -53,6 +50,8 @@ async def main(args: argparse.Namespace):
 #
         while not exit_flag:
             await asyncio.sleep(1.0)
+            sensor_data = await client.read_gatt_char(BLE_UUID_ACCEL_SENSOR_DATA)
+            notification_handler(client, sensor_data)
             print(".")
 
         logger.info("disconnecting...")

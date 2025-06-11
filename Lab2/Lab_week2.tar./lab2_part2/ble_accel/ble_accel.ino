@@ -105,8 +105,8 @@ bool setupBleMode()
   }
 
   // set advertised local name and service UUID:
-  BLE.setDeviceName( "BLE-LAB2" );
-  BLE.setLocalName( "BLE-LAB2" );
+  BLE.setDeviceName( "BLE-AR11" );
+  BLE.setLocalName( "BLE-AR11" );
   BLE.setAdvertisedService( sensorDataService );
 
   // BLE add characteristics
