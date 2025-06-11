@@ -22,10 +22,12 @@ socket = context.socket(zmq.PUB)
 socket.bind("tcp://*:5555")
 
 def publish_data(data):
-    socket.send_string(f"{"x"} {str(data[0])}")
-    socket.send_string(f"{"y"} {str(data[1])}")
-    socket.send_string(f"{"z"} {str(data[2])}")
-    socket.send_string(f"{"gyro"} {str(data[3]), str(data[4]), str(data[5])}")
+    socket.send_string(f"{"Accel x:"} {str(data[0])}")
+    socket.send_string(f"{"Accel y:"} {str(data[1])}")
+    socket.send_string(f"{"Accel z:"} {str(data[2])}")
+    socket.send_string(f"{"Gyro x:"} {str(data[3])}")
+    socket.send_string(f"{"Gyro y:"} {str(data[4])}")
+    socket.send_string(f"{"Gyro z:"} {str(data[5])}")
 
 def notification_handler(sender,data):
     decoded_values = struct.unpack('ffffff', bytes(data))

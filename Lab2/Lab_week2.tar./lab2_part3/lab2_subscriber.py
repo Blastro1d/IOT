@@ -4,7 +4,7 @@ context = zmq.Context()
 socket = context.socket(zmq.SUB)
 socket.connect("tcp://localhost:5555")
 
-socket.setsockopt_string(zmq.SUBSCRIBE, "gyro")
+socket.setsockopt_string(zmq.SUBSCRIBE, "Accel")
 
 print("Waiting for messages...")
 
