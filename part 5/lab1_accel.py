@@ -43,7 +43,6 @@ class Lab1(QMainWindow):
     QMainWindow.__init__(self)
     self.ui = Ui_Form()
     self.ui.setupUi(self)
-    # window = loadUi("lab1.ui", self)
     self.setWindowTitle("arduino sensors")
 
     self.ui.pushButton.clicked.connect(self.timer_control)

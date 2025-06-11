@@ -34,6 +34,6 @@ void loop() {
     Serial.print('\t');
     Serial.print(y, 3);
     Serial.print('\t');
-    Serial.print(z, 3);
+    Serial.println(z, 3);
   }
 }
