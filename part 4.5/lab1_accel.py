@@ -1,5 +1,5 @@
 import sys
-from PyQt5.QtCore import Qt, QTimer
+from PyQt5.QtCore import Qt, QTimer, QObject, QThread, pyqtSignal
 from PyQt5.QtWidgets import *
 from lab1_ui_45 import *
 import numpy as np
@@ -13,6 +13,7 @@ from matplotlib.figure import Figure
 
 import serial
 import time
+from threading import *
 
 arduino = serial.Serial(port='/dev/ttyACM0', baudrate=115200, timeout=0.1)
 
@@ -36,6 +37,24 @@ def std_dev(axis):
     summation += pow(axis[i] - mean(axis), 2)
 
   return summation / len(axis)
+
+class Worker(QThread):
+    finished = pyqtSignal()
+
+    def __init__(self, x_list, y_list, z_list):
+        super().__init__()
+        self.x = x_list
+        self.y = y_list
+        self.z = z_list
+
+    def run(self):
+      """Long-running task."""
+      data = read()
+      split = data.split('\t')
+      self.x.append(float(split[0]))
+      self.y.append(float(split[1]))
+      self.z.append(float(split[2]))
+      self.finished.emit()
 
 
 class Lab1(QMainWindow):
@@ -84,13 +103,7 @@ class Lab1(QMainWindow):
     self.ui.time_left.display(time.time() - self.start_time)
     self.counter += 1
 
-    data = read()
-    split = data.split('\t')
-
-    self.x.append(float(split[0]))
-    self.y.append(float(split[1]))
-    self.z.append(float(split[2]))
-
+    self.runLongTask(self.x, self.y, self.z)
     max_range = self.ui.spinBox_2.value()
 
     while max_range < len(self.x):
@@ -115,6 +128,14 @@ class Lab1(QMainWindow):
     if (time.time() - self.start_time >= self.time_limit):
       print("Time limit: " + str(self.time_limit) + " exceeded")
       self.timer_control()
+
+  def runLongTask(self, x, y, z):
+    self.thread = Worker(x, y, z)
+    self.thread.finished.connect(self.thread.quit)
+    # self.thread.finished.connect(self.cleanup_thread)
+    self.thread.start()
+
+
 
   @property
   def x_value(self):
