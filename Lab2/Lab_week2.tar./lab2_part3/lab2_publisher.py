@@ -19,7 +19,7 @@ exit_flag = False
 logger = logging.getLogger(__name__)
 context = zmq.Context()
 socket = context.socket(zmq.PUB)
-socket.bind("tcp://*:5555")
+socket.bind("tcp://*:5666")
 
 def publish_data(data):
     socket.send_string(f"{"Accel x:"} {str(data[0])}")
