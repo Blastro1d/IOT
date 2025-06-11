@@ -130,7 +130,7 @@
     </property>
    </widget>
   </widget>
-  <widget class="QWidget" name="widget" native="true">
+  <widget class="MplWidget" name="Mplwidget" native="true">
    <property name="geometry">
     <rect>
      <x>300</x>
@@ -141,6 +141,14 @@
    </property>
   </widget>
  </widget>
+ <customwidgets>
+  <customwidget>
+   <class>MplWidget</class>
+   <extends>QWidget</extends>
+   <header>mplwidget.h</header>
+   <container>1</container>
+  </customwidget>
+ </customwidgets>
  <resources/>
  <connections/>
 </ui>

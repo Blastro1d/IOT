@@ -42,11 +42,10 @@ class Ui_Form(object):
         self.Accel_all = QtWidgets.QCheckBox(self.groupBox)
         self.Accel_all.setGeometry(QtCore.QRect(10, 30, 92, 25))
         self.Accel_all.setObjectName("Accel_all")
-        self.widget = QtWidgets.QWidget(Form)
-        self.widget.setGeometry(QtCore.QRect(300, 70, 701, 331))
-        self.widget.setObjectName("widget")
+        self.Mplwidget = MplWidget(Form)
+        self.Mplwidget.setGeometry(QtCore.QRect(300, 70, 701, 331))
+        self.Mplwidget.setObjectName("Mplwidget")
 
-        self.Accel_all.setChecked(True)
         self.retranslateUi(Form)
         QtCore.QMetaObject.connectSlotsByName(Form)
 
@@ -62,3 +61,4 @@ class Ui_Form(object):
         self.Gyro_x.setText(_translate("Form", "Gyro, x"))
         self.Gyro_y.setText(_translate("Form", "Gyro, y"))
         self.Accel_all.setText(_translate("Form", "Accel all"))
+from mplwidget import MplWidget
