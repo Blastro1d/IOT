@@ -8,7 +8,7 @@ from bleak import BleakClient
 from bleak import BleakScanner
 from bleak import discover
 
-ARDUINO_LOCAL_NAME = "BLE-AR01"  #Use the correct Arduino number in this identifier!!
+ARDUINO_LOCAL_NAME = "BLE-AR11"  #Use the correct Arduino number in this identifier!!
 
 LED_UUID = "19b10001-e8f2-537e-4f6c-d104768a1214"
 
@@ -24,14 +24,25 @@ async def find_ble_device(args: argparse.Namespace):
 
 #
 # find your Arduino and return device and address
-    return (d,a)
+    for address, (ble_device, advertisement_data) in devices.items():
+        if ARDUINO_LOCAL_NAME in str(ble_device):
+            print(str(ble_device) + " and " + str(advertisement_data))
+            return(ble_device, advertisement_data)
 
 
 async def runmain(d,a):
 
-    async with BleakClient(d.address) as client:
+    async with BleakClient(d) as client:
         svcs = await client.get_services()
 
+        # Flash the LED 10 times
+        for _ in range(10):
+            await client.write_gatt_char(LED_UUID, bytearray([1]))
+            await asyncio.sleep(1)
+
+            await client.write_gatt_char(LED_UUID, bytearray([0]))
+            await asyncio.sleep(1) 
+    
 # your code here to control the led. 
 # use await statements and the bleak read_gatt_char and write_gatt_char
 # functions of Bleak 

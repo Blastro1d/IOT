@@ -32,7 +32,7 @@ void setup() {
 
 
 // set advertised local name and service UUID:
-  BLE.setLocalName("BLE-LAB2-#8");
+  BLE.setLocalName("BLE-AR11");
   BLE.setAdvertisedService(ledService);
 
 // add the characteristic to the service
@@ -53,7 +53,6 @@ void setup() {
 void loop() {
   // listen for BLE peripherals to connect:
   BLEDevice central = BLE.central();
-
   // if a central is connected to peripheral:
   if (central) {
     Serial.print("Connected to central: ");
