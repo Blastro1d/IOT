@@ -19,12 +19,14 @@ exit_flag = False
 logger = logging.getLogger(__name__)
 context = zmq.Context()
 socket = context.socket(zmq.PUB)
-socket.bind("tcp://*:5666")
+socket.bind("tcp://*:5555")
 
 def publish_data(data):
+    socket.send_string(f"{"Accel all:"} {str(data[0]), str(data[1]), str(data[2])}")
     socket.send_string(f"{"Accel x:"} {str(data[0])}")
     socket.send_string(f"{"Accel y:"} {str(data[1])}")
     socket.send_string(f"{"Accel z:"} {str(data[2])}")
+    socket.send_string(f"{"Gyro all:"} {str(data[3]), str(data[4]), str(data[5])}")
     socket.send_string(f"{"Gyro x:"} {str(data[3])}")
     socket.send_string(f"{"Gyro y:"} {str(data[4])}")
     socket.send_string(f"{"Gyro z:"} {str(data[5])}")

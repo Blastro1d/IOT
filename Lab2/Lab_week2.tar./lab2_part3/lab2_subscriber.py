@@ -8,10 +8,13 @@ import time
 
 context = zmq.Context()
 socket = context.socket(zmq.SUB)
-socket.connect("tcp://localhost:5666")
+socket.connect("tcp://localhost:5555")
 
 def read():
+    print("TEst read1")
+    socket.setsockopt_string(zmq.SUBSCRIBE, "")
     message = socket.recv_string()
+    print("TEst read2")
     print(message)
 
 class Bluetooth(QMainWindow):
@@ -65,7 +68,7 @@ class Bluetooth(QMainWindow):
     read()
     max_range = 20
 
-    while max_range < len(self.x):
+    while max_range < len(self.accel_x):
       self.x.pop(0)
       self.y.pop(0)
       self.z.pop(0)
@@ -76,9 +79,9 @@ class Bluetooth(QMainWindow):
     # self.ui.MplWidget.canvas.axes.plot(range(len(self.z)), self.z, 'g', linewidth=0.5)
     # self.ui.MplWidget.canvas.draw()
 
-    if (time.time() - self.start_time >= self.time_limit):
-      print("Time limit: " + str(self.time_limit) + " exceeded")
-      self.timer_control()
+    # if (time.time() - self.start_time >= self.time_limit):
+    #   print("Time limit: " + str(self.time_limit) + " exceeded")
+    #   self.timer_control()
 
 
 if __name__ == "__main__":
