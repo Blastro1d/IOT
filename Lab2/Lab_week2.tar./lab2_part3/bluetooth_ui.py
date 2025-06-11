@@ -46,6 +46,7 @@ class Ui_Form(object):
         self.widget.setGeometry(QtCore.QRect(300, 70, 701, 331))
         self.widget.setObjectName("widget")
 
+        self.Accel_all.setChecked(True)
         self.retranslateUi(Form)
         QtCore.QMetaObject.connectSlotsByName(Form)
 
