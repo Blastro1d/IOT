@@ -4,7 +4,7 @@
 #define BLE_UUID_SENSOR_DATA_SERVICE              "2BEEF31A-B10D-271C-C9EA-35D865C1F48A"
 #define BLE_UUID_ACCEL_SENSOR_DATA                "4664E7A1-5A13-BFFF-4636-7D0A4B16496C"
 
-#define NUMBER_OF_SENSORS 3
+#define NUMBER_OF_SENSORS 6
 
 union multi_sensor_data{
   struct __attribute__( ( packed ) ) {
@@ -14,7 +14,6 @@ union multi_sensor_data{
 };
 
 union multi_sensor_data accelSensorData;
-
 
 //----------------------------------------------------------------------------------------------------------------------
 // BLE
@@ -53,6 +52,7 @@ if (!IMU.begin()){
 void loop()
 {
   float x,y,z;
+  float gy_x, gy_y, gy_z;
   #define UPDATE_INTERVALL 50
   static long previousMillis = 0;
 
@@ -84,6 +84,13 @@ void loop()
             accelSensorData.values[0] = x;
             accelSensorData.values[1] = y;
             accelSensorData.values[2] = z;
+          }
+
+          if (IMU.gyroscopeAvailable()) {
+            IMU.readGyroscope(gy_x, gy_y, gy_z);
+            accelSensorData.values[3] = gy_x;
+            accelSensorData.values[4] = gy_y;
+            accelSensorData.values[5] = gy_z;
           }
 
           accelSensorDataCharacteristic.writeValue( accelSensorData.bytes, sizeof accelSensorData.bytes );
