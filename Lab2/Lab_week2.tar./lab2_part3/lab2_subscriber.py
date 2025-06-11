@@ -14,7 +14,7 @@ from matplotlib.figure import Figure
 
 context = zmq.Context()
 socket = context.socket(zmq.SUB)
-socket.connect("tcp://localhost:5666")
+socket.connect("tcp://localhost:5555")
 
 def read():
     try:
@@ -78,32 +78,20 @@ class Bluetooth(QMainWindow):
     read()
     max_range = 20
 
-    self.accel_x.append(0.1)
-    self.accel_y.append(0.2)
-    self.accel_z.append(0.3)
+    while max_range < len(self.x):
+      self.x.pop(0)
+      self.y.pop(0)
+      self.z.pop(0)
 
-    self.gyro_x.append(0.1)
-    self.gyro_y.append(0.2)
-    self.gyro_z.append(0.3)
+    # self.ui.MplWidget.canvas.axes.clear()
+    # self.ui.MplWidget.canvas.axes.plot(range(len(self.x)), self.x, 'b', linewidth=0.5)
+    # self.ui.MplWidget.canvas.axes.plot(range(len(self.y)), self.y, 'r', linewidth=0.5)
+    # self.ui.MplWidget.canvas.axes.plot(range(len(self.z)), self.z, 'g', linewidth=0.5)
+    # self.ui.MplWidget.canvas.draw()
 
-    while max_range < self.counter:
-      self.accel_x.pop(0)
-      self.accel_y.pop(0)
-      self.accel_z.pop(0)
-
-      self.gyro_x.pop(0)
-      self.gyro_y.pop(0)
-      self.gyro_z.pop(0)
-      self.counter -= 1
-
-    self.ui.Mplwidget.canvas.axes.clear()
-    self.ui.Mplwidget.canvas.axes.plot(range(len(self.accel_x)), self.accel_x, 'b', linewidth=0.5)
-    self.ui.Mplwidget.canvas.axes.plot(range(len(self.accel_y)), self.accel_y, 'r', linewidth=0.5)
-    self.ui.Mplwidget.canvas.axes.plot(range(len(self.accel_z)), self.accel_z, 'g', linewidth=0.5)
-    self.ui.Mplwidget.canvas.axes.plot(range(len(self.gyro_x)), self.gyro_x, 'y', linewidth=0.5)
-    self.ui.Mplwidget.canvas.axes.plot(range(len(self.gyro_y)), self.gyro_y, 'm', linewidth=0.5)
-    self.ui.Mplwidget.canvas.axes.plot(range(len(self.gyro_z)), self.gyro_z, 'c', linewidth=0.5)
-    self.ui.Mplwidget.canvas.draw()
+    if (time.time() - self.start_time >= self.time_limit):
+      print("Time limit: " + str(self.time_limit) + " exceeded")
+      self.timer_control()
 
 
 if __name__ == "__main__":
