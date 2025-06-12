@@ -11,7 +11,6 @@ import logging
 import struct
 from bleak import BleakClient, BleakScanner
 import zmq
-import time
 
 BLE_UUID_ACCEL_SENSOR_DATA = "4664E7A1-5A13-BFFF-4636-7D0A4B16496C"
 exit_flag = False
@@ -19,9 +18,10 @@ exit_flag = False
 logger = logging.getLogger(__name__)
 context = zmq.Context()
 socket = context.socket(zmq.PUB)
-socket.bind("tcp://*:5555")
+socket.bind("tcp://*:6000")
 
 def publish_data(data):
+    socket.send_string(f"{"nothing"} {"nothing"}")
     socket.send_string(f"{"Accel all:"} {str(data[0]), str(data[1]), str(data[2])}")
     socket.send_string(f"{"Accel x:"} {str(data[0])}")
     socket.send_string(f"{"Accel y:"} {str(data[1])}")
@@ -56,7 +56,7 @@ async def main(args: argparse.Namespace):
         logger.info("connected")
 
         while not exit_flag:
-            await asyncio.sleep(1.0)
+            await asyncio.sleep(0.05)
             sensor_data = await client.read_gatt_char(BLE_UUID_ACCEL_SENSOR_DATA)
             notification_handler(client, sensor_data)
             print(".")
